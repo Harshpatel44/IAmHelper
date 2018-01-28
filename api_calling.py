@@ -14,13 +14,27 @@ def get_response(word_id):
     # string=r.content
     # result=re.findall("\"synonyms\": .*\W.*\W.*\"id\":\W\"(.*)\"",string)
 
+    try:
+        print(word_id)
+        url="""http://api.wordnik.com/v4/word.json/"""+str(word_id).lower()+"""/definitions?limit=200&includeRelated=true&sourceDictionaries=all&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5"""
+        r=requests.get(url)
+        string=r.content
+        #print(string)
+        j=json.loads(string)
+        #print(j[0])
+        #for i in j[0:5]:
+            #print(i['text'])
+        #print(j[1]['text'])
+        list=[]
+        list.extend([j[0]['text'],j[1]['text'],j[2]['text'],j[3]['text'],j[4]['text']])
+        #print(list)
+        return list
 
-    print(word_id)
-    url="""http://api.wordnik.com/v4/word.json/"""+str(word_id).lower()+"""/definitions?limit=200&includeRelated=true&sourceDictionaries=all&useCanonical=false&includeTags=false&api_key=a2a73e7b926c924fad7001ca3111acd55af2ffabf50eb4ae5"""
-    r=requests.get(url)
-    string=r.content
-    print(string)
-    j=json.loads(string)
-    return j[0]["text"]
+    except:
+        return ["No Result"]
 
 
+#harsh
+
+#list=list(a)
+#print(list)
